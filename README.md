@@ -1,4 +1,4 @@
-# node-todo-cicd
+# NodeJS-todo
 
 In this Repo, I will try to dockerize a sample Node JS-todo Application using Dockerfile, create a docker image and run a container based on that docker image and also will push that docker Image to Amazon Elastic Conatiner Registry(E.C.R) for scanning the vulnerabilities.
 
@@ -83,7 +83,7 @@ Step 4: Pushing the Image to DockerHub
 
 `docker push <your_dockerhub_username>/nodejs-todo:latest`
 
-![Screenshot-22](https://user-images.githubusercontent.com/98457309/228917324-3d9f7d3d-bdf9-4eaf-a57f-56131d192452.png
+![Screenshot-22](https://user-images.githubusercontent.com/98457309/228917324-3d9f7d3d-bdf9-4eaf-a57f-56131d192452.png)
 
 7. After few seconds, you can see that the Image you tagged is successfully pushed to your DockerHub Account.
 
