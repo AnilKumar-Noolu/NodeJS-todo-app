@@ -6,7 +6,7 @@ Prerequisites:
 
 -> An AWS account with EC2 and ECR access.
 
-Step 1:
+ # Step 1:
 
 1. First Find a sample NodeJS app source code available on opensource or you can fork this repo and use this.
 
@@ -22,7 +22,7 @@ Step 1:
 
 3. You can also skip the second step if you want to use docker.
 
-Step 2: Setting Up the EC2 Instance
+# Step 2: Setting Up the EC2 Instance
 
 1. Create an EC2 Virtual machine of any type like Ubuntu, CentOS.. and Install Git and Docker on it using suitable commands like yum or apt-get based on your type of EC2 instance.
 
@@ -32,7 +32,7 @@ Step 2: Setting Up the EC2 Instance
 
 3. After the repo is cloned, type `ls` command to view the Repo that is downloaded locally on your EC2 machine.
 
-Step 3: Dockerizing the NodeJS Application
+# Step 3: Dockerizing the NodeJS Application
 
 1. Create your Dockerfile for the above NodeJS Appliocation. In Dockerfile, we are exposing this NodeJS todo application on Port: 8000.
 
@@ -59,7 +59,7 @@ Step 3: Dockerizing the NodeJS Application
 
 ![Screenshot-19](https://user-images.githubusercontent.com/98457309/228914759-344b80ba-c5a3-412b-b01c-3f58dec7f8cb.png)
 
-Step 4: Pushing the Image to DockerHub
+# Step 4: Pushing the Image to DockerHub
 
 1. Now Since the Container is running fine, we can store the Docker Image to Repository and can use it when we really need it. For that we can use DockerHub, Amazon ECR, Jfrog Artifactory etc..
 
@@ -88,6 +88,50 @@ Step 4: Pushing the Image to DockerHub
 7. After few seconds, you can see that the Image you tagged is successfully pushed to your DockerHub Account.
 
 ![Screenshot-23](https://user-images.githubusercontent.com/98457309/228917571-906f01c5-95e0-4913-a298-725e76d7f9c2.png)
+
+# STEP 5: Pushing the Image to Amazon ELastic Container Registry
+
+1. Open the ECR Console.
+
+2. Click on "Create repository"
+
+3. Enter a name for your repository, select pribvate access and Check for Scan on Push Option and click "Create repository"
+
+![Screenshot-24](https://user-images.githubusercontent.com/98457309/228919381-f84cc921-81eb-420b-a72d-cbb455ccc628.png)
+
+4. Open the AWS CLI on your local machine
+
+5. Run the following command to authenticate your Docker client with ECR:
+
+` aws ecr get-login-password | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.<region>.amazonaws.com `
+Replace <your-account-id> and <region> with your actual values
+
+![Screenshot-25](https://user-images.githubusercontent.com/98457309/228920125-b0ecb9f0-b58d-4eea-97c8-0bbf01b5e41a.png)
+
+6. Run the following command to tag your Docker image:
+
+` docker tag <image-name>:<tag> <your-account-id>.dkr.ecr.<region>.amazonaws.com/<repository-name>:<tag> `
+Replace <image-name>, <tag>, <your-account-id>, <region> and <repository-name> with your actual values
+
+7. Verify that the tag has been applied to your Docker image by running docker images
+
+![Screenshot-26](https://user-images.githubusercontent.com/98457309/228920998-1616fb9c-e65d-416a-acc4-0da7df25ef43.png)
+
+8. Run the following command to push your Docker image to ECR:
+
+` docker push <your-account-id>.dkr.ecr.<region>.amazonaws.com/<repository-name>:<tag> `
+Replace <your-account-id>, <region>, <repository-name> and <tag> with your actual values
+
+![Screenshot-27](https://user-images.githubusercontent.com/98457309/228921398-03700579-2a83-47ac-bddf-bbe7fff96e05.png)
+
+9. Wait for the push to complete and verify that your Docker image is now in your ECR repository by refreshing the ECR Console.
+
+![Screenshot-28](https://user-images.githubusercontent.com/98457309/228921734-e96458b3-1335-48ad-bc92-15aecaa87576.png)
+
+10. You can also see the Vulnerabilities Present in that Image which are classified as HIGH, MEDIUM, LOW and you can take steps later to eliminate that vulnerabilities.
+
+# Congratulations, you have successfully pushed a Docker image to Amazon ECR!
+
 
 
 
